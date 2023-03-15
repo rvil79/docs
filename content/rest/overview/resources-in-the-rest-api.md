@@ -83,16 +83,25 @@ response illustrates all attributes that are returned by that method.
 
 ## Authentication
 
-{% data variables.product.company_short %} recommends that you create a token to authenticate to the REST API. For more information about which type of token to create, see "[AUTOTITLE](/rest/overview/authenticating-to-the-rest-api)."
+{% ifversion ghae %} We recommend authenticating to the {% data variables.product.product_name %} REST API by creating an OAuth2 token through the [web application flow](/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps#web-application-flow). {% else %} There are two ways to authenticate through {% data variables.product.product_name %} REST API.{% endif %} Requests that require authentication will return `404 Not Found`, instead of `403 Forbidden`, in some places.  This is to prevent the accidental leakage of private repositories to unauthorized users.
 
-You can authenticate your request by sending a token in the `Authorization` header of your request:
+### Basic authentication
 
 ```shell
-curl --request GET \
---url "{% data variables.product.api_url_code %}/octocat" \
---header "Authorization: Bearer YOUR-TOKEN"{% ifversion api-date-versioning %}\
---header "X-GitHub-Api-Version: {{ allVersions[currentVersion].latestApiVersion }}"{% endif %}
+$ curl -u "username" {% data variables.product.api_url_pre %}
 ```
+
+### OAuth2 token (sent in a header)
+
+```shell
+$ curl -H "Authorization: Bearer OAUTH-TOKEN" {% data variables.product.api_url_pre %}
+```
+
+{% note %}
+
+Note: GitHub recommends sending OAuth tokens using the Authorization header.
+
+{% endnote %}
 
 {% note %}
 
@@ -100,7 +109,7 @@ curl --request GET \
 
 {% endnote %}
 
-If you try to use a REST API endpoint without a token or with a token that has insufficient permissions, you will receive a `404 Not Found` or `403 Forbidden` response.
+Read [more about OAuth2](/apps/oauth-apps/building-oauth-apps).  Note that OAuth2 tokens can be acquired using the [web application flow](/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps#web-application-flow) for production applications.
 
 {% ifversion fpt or ghes or ghec %}
 ### OAuth2 key/secret

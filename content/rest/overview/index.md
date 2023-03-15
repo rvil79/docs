@@ -14,7 +14,7 @@ children:
   - /resources-in-the-rest-api
   - /api-versions
   - /media-types
-  - /authenticating-to-the-rest-api
+  - /other-authentication-methods
   - /troubleshooting
   - /libraries
   - /openapi-description
@@ -26,4 +26,3 @@ children:
 redirect_from:
   - /developers/overview
 ---
-
